@@ -1,69 +1,38 @@
-# React + TypeScript + Vite
+# 🎙️ VoiceMemoAI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**VoiceMemoAI** is a modern voice note-taking Progressive Web App (PWA) built with **React**, **TypeScript**, **Supabase**, and **Hugging Face Whisper API**.
 
-Currently, two official plugins are available:
+The app allows users to:
+- 🎧 Record voice memos
+- 🧠 Transcribe speech to text using AI
+- ✍️ Summarize the content (optional)
+- 📝 Save and view notes per user
+- 🌗 Switch between dark/light mode
+- 📱 Install as a mobile/web PWA
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Category | Tools/Frameworks |
+|----------|------------------|
+| Frontend | React + Vite + TypeScript |
+| Styling | TailwindCSS + DaisyUI |
+| Auth & DB | Supabase (Google Auth + Postgres DB) |
+| AI | Hugging Face Whisper API (Speech-to-Text) |
+| PWA | Vite Plugin PWA |
+| Hosting | [Your choice: Vercel, Netlify, etc.] |
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 🔐 Google Sign-In (Supabase OAuth)
+- 🎙️ Voice recording via MediaRecorder API
+- 📤 Send audio to Hugging Face Whisper API
+- 📝 Save transcript + AI summary to Supabase
+- 🗂️ View all your voice notes in beautiful cards
+- 🌗 Dark / Light mode toggle
+- 📱 Full PWA support (Installable & Offline Ready)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
