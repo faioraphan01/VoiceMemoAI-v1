@@ -46,14 +46,13 @@ const NoteList = ({ refreshTrigger }) => {
   };
 
 const formatDate = (dateString) => {
-  const utcDate = new Date(dateString);
-  const bangkokDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
+  const localDate = new Date(dateString);
 
-  return bangkokDate.toLocaleDateString('th-TH', {
+  return localDate.toLocaleDateString('th-TH', {
     day: 'numeric',
     month: 'numeric',
     year: 'numeric',
-  }) + ' ' + bangkokDate.toLocaleTimeString('th-TH', {
+  }) + ' ' + localDate.toLocaleTimeString('th-TH', {
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -148,5 +147,6 @@ const formatDate = (dateString) => {
 };
 
 export default NoteList;
+
 
 
