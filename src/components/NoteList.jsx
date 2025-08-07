@@ -45,13 +45,18 @@ const NoteList = ({ refreshTrigger }) => {
     setTimeout(() => setCopiedId(null), 1500);
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+ const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleString('th-TH', {
+    timeZone: 'Asia/Bangkok',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
 
   if (loading) {
     return (
@@ -141,3 +146,4 @@ const NoteList = ({ refreshTrigger }) => {
 };
 
 export default NoteList;
+
