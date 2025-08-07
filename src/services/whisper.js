@@ -12,7 +12,7 @@ export const transcribeAudio = async (audioBlob) => {
     const response = await fetch(WHISPER_API_URL, {
       method: 'POST',
       headers: {
-        Authorization: Bearer ${HF_API_KEY},
+        Authorization: `Bearer ${HF_API_KEY}`,
         'Content-Type': 'audio/webm'
       },
       body: audioArrayBuffer,
@@ -21,7 +21,7 @@ export const transcribeAudio = async (audioBlob) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('❌ Whisper API Error: ', errorText);
-      throw new Error(HTTP error! status: ${response.status});
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const result = await response.json();
@@ -40,11 +40,11 @@ export const generateSummary = async (transcript) => {
     const response = await fetch(CORRECT_TEXT_API_URL, {
       method: 'POST',
       headers: {
-        Authorization: Bearer ${HF_API_KEY},
+        Authorization: `Bearer ${HF_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        inputs: ช่วยปรับข้อความให้ถูกต้องและเป็นทางการ:\n${transcript}
+        inputs: `ช่วยปรับข้อความให้ถูกต้องและเป็นทางการ:\n${transcript}`
       })
     });
 
