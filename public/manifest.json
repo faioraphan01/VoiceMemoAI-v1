@@ -2,7 +2,7 @@
   "name": "VoiceMemoAI",
   "short_name": "VoiceMemoAI",
   "description": "AI-powered voice memo application with transcription and summaries",
-  "theme_color": "#3b82f6",
+  "theme_color": "#0f172a",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
@@ -26,4 +26,5 @@
       "purpose": "any maskable"
     }
   ]
+
 }
