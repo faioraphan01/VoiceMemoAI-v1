@@ -45,15 +45,17 @@ const NoteList = ({ refreshTrigger }) => {
     setTimeout(() => setCopiedId(null), 1500);
   };
 
- const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleString('th-TH', {
-    timeZone: 'Asia/Bangkok',
-    year: 'numeric',
-    month: 'numeric',
+const formatDate = (dateString) => {
+  const utcDate = new Date(dateString);
+  const bangkokDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
+
+  return bangkokDate.toLocaleDateString('th-TH', {
     day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  }) + ' ' + bangkokDate.toLocaleTimeString('th-TH', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   });
 };
 
@@ -146,4 +148,5 @@ const NoteList = ({ refreshTrigger }) => {
 };
 
 export default NoteList;
+
 
