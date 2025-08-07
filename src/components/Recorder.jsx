@@ -42,7 +42,8 @@ const Recorder = ({ onNoteCreated }) => {
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/wav' });
+        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(chunksRef.current, { type: mimeType });
         setRecordedBlob(blob);
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
@@ -52,7 +53,7 @@ const Recorder = ({ onNoteCreated }) => {
       mediaRecorder.start();
       setIsRecording(true);
       setRecordingTime(0);
-      
+
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1);
       }, 1000);
@@ -93,9 +94,9 @@ const Recorder = ({ onNoteCreated }) => {
     try {
       const transcript = await transcribeAudio(recordedBlob);
       const summary = await generateSummary(transcript);
-      
+
       const { data, error } = await createNote(transcript, summary, '');
-      
+
       if (error) {
         throw new Error(error.message);
       }
@@ -104,8 +105,7 @@ const Recorder = ({ onNoteCreated }) => {
       setAudioUrl(null);
       setRecordingTime(0);
       onNoteCreated?.();
-      
-      // Show success message
+
       const successModal = document.getElementById('success_modal');
       successModal?.showModal();
     } catch (error) {
@@ -137,7 +137,7 @@ const Recorder = ({ onNoteCreated }) => {
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body text-center">
         <h2 className="card-title justify-center mb-4">Voice Recorder</h2>
-        
+
         {!recordedBlob ? (
           <div className="space-y-6">
             <div className="flex justify-center">
@@ -157,7 +157,7 @@ const Recorder = ({ onNoteCreated }) => {
                 </button>
               </div>
             </div>
-            
+
             {isRecording && (
               <div className="space-y-2">
                 <div className="text-2xl font-mono text-error">
@@ -166,7 +166,7 @@ const Recorder = ({ onNoteCreated }) => {
                 <div className="text-sm text-base-content/70">Recording...</div>
               </div>
             )}
-            
+
             {!isRecording && (
               <p className="text-base-content/70">
                 Tap the microphone to start recording your voice memo
@@ -186,7 +186,7 @@ const Recorder = ({ onNoteCreated }) => {
                 </button>
               </div>
             </div>
-            
+
             <audio
               ref={audioRef}
               src={audioUrl}
@@ -196,7 +196,7 @@ const Recorder = ({ onNoteCreated }) => {
               }}
               className="hidden"
             />
-            
+
             <div className="flex gap-2 justify-center">
               <button
                 onClick={discardRecording}
