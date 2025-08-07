@@ -46,7 +46,8 @@ const NoteList = ({ refreshTrigger }) => {
   };
 
 const formatDate = (dateString) => {
-  const localDate = new Date(dateString);
+  const utcDate = new Date(dateString);
+  const localDate = new Date(utcDate.getTime() + 7 * 60 * 60 * 1000); // เพิ่ม 7 ชม.
 
   return localDate.toLocaleDateString('th-TH', {
     day: 'numeric',
@@ -147,6 +148,7 @@ const formatDate = (dateString) => {
 };
 
 export default NoteList;
+
 
 
 
