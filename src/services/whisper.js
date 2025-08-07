@@ -1,19 +1,27 @@
 const HF_API_KEY = import.meta.env.VITE_HF_API_KEY;
 const WHISPER_API_URL = 'https://api-inference.huggingface.co/models/openai/whisper-large-v3';
+const CORRECT_TEXT_API_URL = 'https://api-inference.huggingface.co/models/vistec/ttc-finetuned-gen2-thai';
 
+/**
+ * ถอดเสียงจากไฟล์เสียงด้วย Whisper
+ */
 export const transcribeAudio = async (audioBlob) => {
   try {
+    const audioArrayBuffer = await audioBlob.arrayBuffer();
+
     const response = await fetch(WHISPER_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${HF_API_KEY}`,
-        'Content-Type': 'audio/wav',
+        Authorization: Bearer ${HF_API_KEY},
+        'Content-Type': 'audio/webm'
       },
-      body: audioBlob,
+      body: audioArrayBuffer,
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error('❌ Whisper API Error: ', errorText);
+      throw new Error(HTTP error! status: ${response.status});
     }
 
     const result = await response.json();
@@ -24,19 +32,32 @@ export const transcribeAudio = async (audioBlob) => {
   }
 };
 
+/**
+ * ปรับคำผิดให้ถูกต้องและดูเป็นทางการขึ้น ด้วยโมเดล Thai LLM
+ */
 export const generateSummary = async (transcript) => {
   try {
-    // Simple summary generation - you could use a more sophisticated model
-    const sentences = transcript.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    if (sentences.length <= 2) {
+    const response = await fetch(CORRECT_TEXT_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: Bearer ${HF_API_KEY},
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        inputs: ช่วยปรับข้อความให้ถูกต้องและเป็นทางการ:\n${transcript}
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Text Correction API Error: ', errorText);
       return transcript;
     }
-    
-    // For now, return first two sentences as summary
-    const summary = sentences.slice(0, 2).join('. ').trim();
-    return summary + (summary.endsWith('.') ? '' : '.');
+
+    const result = await response.json();
+    return result[0]?.generated_text || transcript;
   } catch (error) {
-    console.error('Error generating summary:', error);
+    console.error('Error correcting text:', error);
     return transcript;
   }
 };
